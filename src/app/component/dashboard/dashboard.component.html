@@ -1,0 +1,91 @@
+<!-- 
+  <app-navbar
+  [title]="'Penny $aver'"
+  [links]="[
+    { label: 'Expense', route: '/expenses' },
+    { label: 'Income', route: '/add-income' },
+    { label: 'Logout', route: '/Logout' }
+  ]">
+ </app-navbar>
+  <div class="dashboard-content">
+    
+  </div>
+   -->
+
+
+<app-navbar
+  [title]="'Penny $aver'"
+  [links]="[
+    { label: 'Expense', route: '/expenses' },
+    { label: 'Income', route: '/add-income' }
+  
+  ]">
+</app-navbar>
+
+<div class="dashboard-container">
+  <!-- Loading message -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading budget data...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="error" class="error-container">
+    <p>{{ error }}</p>
+    <button (click)="loadBudgetData()">Try Again</button>
+  </div>
+
+  <!-- Dashboard content -->
+  <div *ngIf="!loading && !error">
+    <!-- User greeting section -->
+    <div class="greeting-section">
+      <h1>Welcome to Your Financial Dashboard</h1>
+      <p>Track your income, expenses, and savings at a glance.</p>
+    </div>
+    
+    <div class="dashboard-content">
+      <!-- Savings details (left side) -->
+      <div class="savings-details">
+        <div class="card">
+          <h2>Budget Summary</h2>
+          <div class="summary-item">
+            <span class="label">Total Income:</span>
+            <span class="value income">{{ budgetSummary.totalIncome | currency }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Total Expenses:</span>
+            <span class="value expense">{{ budgetSummary.totalExpense | currency }}</span>
+          </div>
+          <div class="divider"></div>
+          <div class="summary-item savings">
+            <span class="label">Total Savings:</span>
+            <span class="value" [ngClass]="budgetSummary.savings >= 0 ? 'positive' : 'negative'">
+              {{ budgetSummary.savings | currency }}
+            </span>
+          </div>
+          <div class="savings-percentage" *ngIf="budgetSummary.totalIncome > 0">
+            <span>Savings Rate: {{ (budgetSummary.savings / budgetSummary.totalIncome * 100).toFixed(1) }}%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget visualization (right side) -->
+      <div class="budget-visualization">
+        <div class="card">
+          <h2>Income vs. Expenses</h2>
+          <div class="chart-container">
+            <canvas id="budgetChart"></canvas>
+          </div>
+        </div>
+        
+        <!-- Category breakdown chart -->
+        <div class="card mt-20">
+          <h2>Expense Breakdown</h2>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

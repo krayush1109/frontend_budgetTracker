@@ -1,0 +1,28 @@
+<!-- Navbar at the top -->
+<app-navbar
+  [title]="'Penny $aver'"
+  [links]="[
+    { label: 'Home', route: '/' },
+    { label: 'Login', route: '/login' },
+    { label: 'Signup', route: '/signup' }
+  ]">
+</app-navbar>
+
+<!-- Main content with background video -->
+<div class="relative flex items-center justify-center min-h-screen overflow-hidden">
+
+  <!-- Background Video -->
+  <video autoplay loop muted plays-inline class="background-video" oncanplay="this.parentElement.classList.add('video-loaded')">
+    <source src="/wallet.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay Content: More transparent container -->
+  <div class="relative z-10 max-w-2xl mx-auto p-8 bg-white/50 rounded-xl shadow-lg text-center">
+    <h5 class="text-4xl font-bold mb-4 text-gray-900">Welcome to Personal Budget Tracker</h5>
+    <!-- <p class="text-lg text-gray-700">
+      Manage your income and expenses, promote savings, and improve your financial habits.<br>
+      Get clarity, control, and confidence to achieve your financial goals!
+    </p> -->
+  </div>
+</div>

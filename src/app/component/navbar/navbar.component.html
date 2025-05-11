@@ -1,0 +1,13 @@
+<nav class="bg-gray-200 text-black shadow-md p-4 flex justify-between items-center">
+  <div class="text-xl font-bold italic">{{ title }}</div>
+  <ul class="flex gap-6 items-center">
+    <li *ngFor="let link of links">
+      <a [routerLink]="link.route" class="hover:text-gray-600">{{ link.label }}</a>
+    </li>
+    <li *ngIf="shouldShowLogout()">
+      <button (click)="onLogout()" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+        Logout
+      </button>
+    </li>
+  </ul>
+</nav>

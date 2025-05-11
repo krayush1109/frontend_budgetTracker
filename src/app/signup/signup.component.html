@@ -1,0 +1,70 @@
+<app-navbar
+  [title]="'Penny $aver'"
+  [links]="[
+    { label: 'Home', route: '/' },
+    { label: 'Login', route: '/login' },
+    { label: 'Signup', route: '/signup' }
+  ]">
+</app-navbar>
+<section class="bg-gray-50">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <div class="w-full bg-white rounded-lg shadow border sm:max-w-md xl:p-0">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                    Create Your Account
+                </h1>
+
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4 md:space-y-6">
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                        <input type="email" id="email" formControlName="email"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
+                            placeholder="your@email.com">
+                        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+                            class="text-red-500 text-sm">
+                            Enter a valid email address.
+                        </div>
+                    </div>
+
+                    <!-- Username -->
+                    <div>
+                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
+                        <input type="text" id="username" formControlName="username"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
+                            placeholder="Your Username">
+                        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+                            class="text-red-500 text-sm">
+                            Username must be at least 4 characters.
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                        <input type="password" id="password" formControlName="password" placeholder="••••••••"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5">
+                        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                            class="text-red-500 text-sm">
+                            Password must be at least 6 characters.
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50 disabled:cursor-not-allowed"
+                        [disabled]="registerForm.invalid">
+                        Register
+                    </button>
+
+                    <!-- Already have an account link -->
+                    <p class="text-sm font-light text-gray-500 text-center">
+                        Already have an account? <a href="/login"
+                            class="font-medium text-blue-600 hover:underline">Click here</a>
+                    </p>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

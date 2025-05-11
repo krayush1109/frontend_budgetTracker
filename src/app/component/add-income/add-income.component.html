@@ -1,0 +1,66 @@
+<app-navbar [title]="'Penny $aver'" [links]="[
+    { label: 'Dashboard', route: '/dashboard' },
+    { label: 'Expense', route: '/expenses' }
+]"></app-navbar>
+
+<div class="container mx-auto mt-10 p-5">
+  <div class="flex flex-wrap justify-between items-center">
+
+    <!-- ✅ Income & Budget Display Section -->
+    <div class="w-full md:w-2/4 flex flex-col">
+      <div class="flex justify-between gap-4 p-4">
+        <div class="bg-green-200 p-4 rounded-lg shadow-md w-1/2 text-center">
+          <h3 class="text-lg font-bold text-green-700">Your Current Income</h3>
+          <p class="text-gray-700 mt-1">₹{{ currentIncome }}</p>
+        </div>
+        <div class="bg-blue-200 p-4 rounded-lg shadow-md w-1/2 text-center">
+          <h3 class="text-lg font-bold text-blue-700">Your Current Budget</h3>
+          <p class="text-gray-700 mt-1">₹{{ currentBudget }}</p>
+        </div>
+      </div>
+
+      <!-- ✅ Button: Enable Form & Load Data -->
+      <div class="flex justify-center mt-4">
+        <button (click)="enableFormForUpdate()" *ngIf="incomeId !== null"
+          class="p-2 bg-green-500 text-white font-semibold rounded hover:bg-green-600 transition">
+          Update Income Data
+        </button>
+      </div>
+
+      <div class="flex-1 text-center mt-4">
+        <img [src]="imagePath" alt="Income Image" class="w-full max-h-64 object-cover rounded-lg shadow-md" />
+      </div>
+    </div>
+
+    <!-- ✅ Income Form -->
+    <div class="w-full md:w-5/12 bg-white p-5 rounded-lg shadow-md mt-6 md:mt-0">
+      <form [formGroup]="incomeForm" (ngSubmit)="updateIncomeData()" class="flex flex-col space-y-3">
+        <h2 class="text-lg font-bold text-gray-700 text-center">Income Details</h2>
+
+        <label for="amount" class="font-semibold text-gray-600 text-sm">Amount:</label>
+        <input id="amount" type="number" formControlName="amount" required
+          class="p-2 border rounded focus:ring focus:ring-blue-300" [disabled]="isFormDisabled" />
+
+        <label for="description" class="font-semibold text-gray-600 text-sm">Description:</label>
+        <input id="description" type="text" formControlName="description"
+          class="p-2 border rounded focus:ring focus:ring-blue-300" [disabled]="isFormDisabled" />
+
+        <label for="date" class="font-semibold text-gray-600 text-sm">Date:</label>
+        <input id="date" type="date" formControlName="date" required
+          class="p-2 border rounded focus:ring focus:ring-blue-300" [disabled]="isFormDisabled" />
+
+        <label for="budget" class="font-semibold text-gray-600 text-sm">Budget:</label>
+        <input id="budget" type="number" formControlName="budget" required
+          class="p-2 border rounded focus:ring focus:ring-blue-300" [disabled]="isFormDisabled" />
+        <p *ngIf="budgetExceeded" class="text-red-600 text-xs">⚠ Budget exceeds recommended limit!</p>
+
+        <!-- ✅ Change button label dynamically -->
+        <button type="submit" class="mt-2 p-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
+          [disabled]="isFormDisabled">
+          {{ isUpdating ? 'Update Data' : 'Save Income' }}
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
