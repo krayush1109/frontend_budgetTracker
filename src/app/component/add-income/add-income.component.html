@@ -34,7 +34,7 @@
 
     <!-- ✅ Income Form -->
     <div class="w-full md:w-5/12 bg-white p-5 rounded-lg shadow-md mt-6 md:mt-0">
-      <form [formGroup]="incomeForm" (ngSubmit)="updateIncomeData()" class="flex flex-col space-y-3">
+      <form [formGroup]="incomeForm" (ngSubmit)="saveOrUpdateIncomeData()" class="flex flex-col space-y-3">
         <h2 class="text-lg font-bold text-gray-700 text-center">Income Details</h2>
 
         <label for="amount" class="font-semibold text-gray-600 text-sm">Amount:</label>
@@ -55,8 +55,8 @@
         <p *ngIf="budgetExceeded" class="text-red-600 text-xs">⚠ Budget exceeds recommended limit!</p>
 
         <!-- ✅ Change button label dynamically -->
-        <button type="submit" class="mt-2 p-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
-          [disabled]="isFormDisabled">
+        <button type="button" class="mt-2 p-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600 transition"
+          [disabled]="isFormDisabled" (click)="saveOrUpdateIncomeData()">
           {{ isUpdating ? 'Update Data' : 'Save Income' }}
         </button>
       </form>

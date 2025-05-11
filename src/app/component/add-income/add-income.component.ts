@@ -20,13 +20,12 @@ export class AddIncomeComponent implements OnInit {
   incomeForm!: FormGroup;
   budgetExceeded = false;
   budgetInvalid = false;
-  // imagePath = 'assets/images/income-default.jpg'; // ✅ Default image
   imagePath = '19197498.jpg'; // ✅ Default image
   currentIncome = '-';
   currentBudget = '-';
   incomeId: number | null = null; // ✅ Keep income ID for updates
   savedIncomeData: any = null; // ✅ Stores API response for manual filling
-  isFormDisabled = true; // ✅ Initially disable the form
+  isFormDisabled = false; // ✅ Enable form initially
   isUpdating = false; // ✅ Track when updating data
 
   constructor(private fb: FormBuilder, private incomeService: IncomeService) {}
@@ -40,19 +39,13 @@ export class AddIncomeComponent implements OnInit {
   initializeForm(): void {
     this.incomeForm = this.fb.group({
       amount: [
-        { value: null, disabled: this.isFormDisabled },
+        { value: null, disabled: false },
         [Validators.required, Validators.min(1)],
       ],
-      description: [
-        { value: '', disabled: this.isFormDisabled },
-        Validators.required,
-      ],
-      date: [
-        { value: new Date(), disabled: this.isFormDisabled },
-        Validators.required,
-      ],
+      description: [{ value: '', disabled: false }, Validators.required],
+      date: [{ value: new Date(), disabled: false }, Validators.required],
       budget: [
-        { value: null, disabled: this.isFormDisabled },
+        { value: null, disabled: false },
         [Validators.required, Validators.min(1)],
       ],
     });
@@ -75,6 +68,12 @@ export class AddIncomeComponent implements OnInit {
           this.incomeId = incomeData.incomeId ?? null; // ✅ Keep income ID
           this.currentIncome = incomeData.amount || '-';
           this.currentBudget = incomeData.budget || '-';
+
+          // ✅ Disable form only if an existing income record is found
+          if (this.incomeId !== null) {
+            this.isFormDisabled = true;
+            this.incomeForm.disable();
+          }
         }
       },
       (error) => {
@@ -92,25 +91,43 @@ export class AddIncomeComponent implements OnInit {
     }
   }
 
-  updateIncomeData(): void {
-    if (this.incomeId !== null) {
-      // ✅ Ensure valid ID exists
-      const updatedData = this.incomeForm.value;
+  saveOrUpdateIncomeData(): void {
+    const incomeData = this.incomeForm.value;
 
-      this.incomeService.updateIncome(this.incomeId, updatedData).subscribe(
+    if (this.incomeId !== null) {
+      // ✅ Update existing income record
+      this.incomeService.updateIncome(this.incomeId, incomeData).subscribe(
         () => {
           alert('Income data updated successfully!');
-          this.currentIncome = updatedData.amount || '-';
-          this.currentBudget = updatedData.budget || '-';
+          this.currentIncome = incomeData.amount || '-';
+          this.currentBudget = incomeData.budget || '-';
           this.isFormDisabled = true; // ✅ Disable form after update
           this.isUpdating = false;
+
+          // ✅ Reset form fields after update
+          this.incomeForm.reset();
         },
         () => {
           alert('Failed to update income data.');
         }
       );
     } else {
-      alert('No income record found to update.');
+      // ✅ Save new income record for first-time users
+      this.incomeService.addIncome(incomeData).subscribe(
+        (response) => {
+          alert('Income data saved successfully!');
+          this.incomeId = response.incomeId; // ✅ Store new ID for future updates
+          this.currentIncome = incomeData.amount || '-';
+          this.currentBudget = incomeData.budget || '-';
+          this.isFormDisabled = true; // ✅ Disable form after saving
+
+          // ✅ Reset form fields after update
+          this.incomeForm.reset();
+        },
+        () => {
+          alert('Failed to save income data.');
+        }
+      );
     }
   }
 }
