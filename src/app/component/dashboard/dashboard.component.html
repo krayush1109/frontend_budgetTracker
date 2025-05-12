@@ -1,75 +1,77 @@
-<!-- 
-  <app-navbar
-  [title]="'Penny $aver'"
-  [links]="[
-    { label: 'Expense', route: '/expenses' },
-    { label: 'Income', route: '/add-income' },
-    { label: 'Logout', route: '/Logout' }
-  ]">
- </app-navbar>
-  <div class="dashboard-content">
-    
-  </div>
-   -->
-
-
 <app-navbar
   [title]="'Penny $aver'"
   [links]="[
     { label: 'Expense', route: '/expenses' },
     { label: 'Income', route: '/add-income' }
-  
   ]">
 </app-navbar>
 
 <div class="dashboard-container">
-  <!-- Loading message -->
+
+  <!-- Loading State -->
   <div *ngIf="loading" class="loading-container">
     <div class="spinner"></div>
     <p>Loading budget data...</p>
   </div>
 
-  <!-- Error message -->
+  <!-- Error Message -->
   <div *ngIf="error" class="error-container">
     <p>{{ error }}</p>
     <button (click)="loadBudgetData()">Try Again</button>
   </div>
 
-  <!-- Dashboard content -->
+  <!-- Main Dashboard Content -->
   <div *ngIf="!loading && !error">
-    <!-- User greeting section -->
+    
+    <!-- User Greeting -->
     <div class="greeting-section">
       <h1>Welcome to Your Financial Dashboard</h1>
       <p>Track your income, expenses, and savings at a glance.</p>
     </div>
+
     
+
     <div class="dashboard-content">
-      <!-- Savings details (left side) -->
+      
+      <!-- Budget Summary Card -->
       <div class="savings-details">
         <div class="card">
           <h2>Budget Summary</h2>
+
           <div class="summary-item">
             <span class="label">Total Income:</span>
-            <span class="value income">{{ budgetSummary.totalIncome | currency }}</span>
+            <span class="value income">{{ budgetSummary.totalIncome | currency: 'INR' }}</span>
           </div>
+
           <div class="summary-item">
             <span class="label">Total Expenses:</span>
-            <span class="value expense">{{ budgetSummary.totalExpense | currency }}</span>
+            <span class="value expense">{{ budgetSummary.totalExpense | currency: 'INR' }}</span>
           </div>
+
           <div class="divider"></div>
+
           <div class="summary-item savings">
             <span class="label">Total Savings:</span>
             <span class="value" [ngClass]="budgetSummary.savings >= 0 ? 'positive' : 'negative'">
-              {{ budgetSummary.savings | currency }}
+              {{ budgetSummary.savings | currency: 'INR' }}
             </span>
           </div>
-          <div class="savings-percentage" *ngIf="budgetSummary.totalIncome > 0">
-            <span>Savings Rate: {{ (budgetSummary.savings / budgetSummary.totalIncome * 100).toFixed(1) }}%</span>
-          </div>
+
+
+          
+          <!-- 🏆 Savings Message -->
+    <div class="savings-message">
+      <p *ngIf="budgetSummary.savings > 0" class="success-message">
+        🎉 Congratulations! You have saved <strong>₹{{ budgetSummary.savings }}</strong> this month!
+      </p>
+      <p *ngIf="budgetSummary.savings <= 0" class="failure-message">
+        😞 Sorry, you couldn't save this month. Consider revising your budget!
+      </p>
+    </div>
         </div>
       </div>
 
-      <!-- Budget visualization (right side) -->
+      <!-- Budget Visualization -->
       <div class="budget-visualization">
         <div class="card">
           <h2>Income vs. Expenses</h2>
@@ -77,15 +79,16 @@
             <canvas id="budgetChart"></canvas>
           </div>
         </div>
-        
-        <!-- Category breakdown chart -->
-        <div class="card mt-20">
+
+        <!-- Expense Breakdown Chart -->
+        <!-- <div class="card mt-20">
           <h2>Expense Breakdown</h2>
           <div class="chart-container">
             <canvas id="categoryChart"></canvas>
           </div>
-        </div>
+        </div> -->
       </div>
+      
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<nav class="bg-gray-200 text-black shadow-md p-4 flex justify-between items-center">
+<!-- <nav class="bg-gray-200 text-black shadow-md p-4 flex justify-between items-center">
   <div class="text-xl font-bold italic">{{ title }}</div>
   <ul class="flex gap-6 items-center">
     <li *ngFor="let link of links">
@@ -10,4 +10,65 @@
       </button>
     </li>
   </ul>
+</nav> -->
+
+<!-- <nav class="bg-gray-200 text-black shadow-md p-4 flex justify-between items-center">
+  <div class="text-xl font-bold italic">{{ title }}</div>
+  <ul class="flex gap-6 items-center">
+    <li *ngFor="let link of links">
+      <a [routerLink]="link.route" class="hover:text-gray-600">{{ link.label }}</a>
+    </li>
+    <li *ngIf="shouldShowLogout()">
+      <span class="text-sm text-gray-700 mr-4">{{ username }}</span>
+      <button (click)="onLogout()" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+        Logout
+      </button>
+    </li>
+  </ul>
+</nav> -->
+
+<!-- <nav class="bg-gray-200 text-black shadow-md p-4 flex justify-between items-center">
+  <div class="flex items-center">
+    <div class="text-xl font-bold italic">{{ title }}</div>
+    <span *ngIf="shouldShowLogout()" class="text-sm text-gray-700 ml-4 font-bold italic rounded">&#64;{{ username }}</span>
+  </div>
+  <ul class="flex gap-6 items-center">
+    <li *ngFor="let link of links">
+      <a [routerLink]="link.route" class="hover:text-gray-600">{{ link.label }}</a>
+    </li>
+    <li *ngIf="shouldShowLogout()">
+      <button (click)="onLogout()" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+        Logout
+      </button>
+    </li>
+  </ul>
+</nav> -->
+
+<nav class="bg-gray-200 text-black shadow-md p-4 flex justify-between items-center">
+  <div class="flex items-center">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="24" height="24">
+      <path d="M45 17v4a2 2 0 0 0 0-4zM41 13a2 2 0 0 0 2 2v-4a2 2 0 0 0-2 2z" style="fill:#232328"/>
+      <path d="M44 1a15 15 0 1 0 15 15A15.017 15.017 0 0 0 44 1zm1 22v1a1 1 0 0 1-2 0v-1h-2a1 1 0 0 1 0-2h2v-4a4 4 0 0 1 0-8V8a1 1 0 0 1 2 0v1h2a1 1 0 0 1 0 2h-2v4a4 4 0 0 1 0 8z" style="fill:#232328"/>
+      <path d="M60.88 32.12a3.93 3.93 0 0 0-5.42 0L44.59 43H29a1 1 0 0 1 0-2h10.5a3.5 3.5 0 0 0 0-7H19a1.033 1.033 0 0 0-.71.29l-6.88 6.88 12.42 12.42L26.41 51H47a1.033 1.033 0 0 0 .71-.29l13.17-13.17a3.839 3.839 0 0 0 0-5.42zM7.707 40.293a1 1 0 0 0-1.414 0l-3 3a1 1 0 0 0 0 1.414l17 17a1 1 0 0 0 1.414 0l3-3a1 1 0 0 0 0-1.414zM2.29 48.29A1.033 1.033 0 0 0 2 49v13a1 1 0 0 0 1 1h13a1.033 1.033 0 0 0 .71-.29l.88-.88L3.17 47.41z" style="fill:#232328"/>
+    </svg>
+    <div class="text-xl font-bold italic ml-2">{{ title }}</div>
+    <span *ngIf="shouldShowLogout()" class="text-sm text-gray-700 ml-4 font-bold italic rounded">&#64;{{ username }}</span>
+  </div>
+  <ul class="flex gap-6 items-center">
+    <li *ngFor="let link of links">
+      <a [routerLink]="link.route" class="hover:text-gray-600">{{ link.label }}</a>
+    </li>
+    <li *ngIf="shouldShowLogout()">
+      <button (click)="onLogout()" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+        Logout
+      </button>
+    </li>
+  </ul>
 </nav>
+
+
+
+
+
+

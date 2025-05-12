@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -12,7 +13,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 @Component({
   selector: 'app-add-income',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NavbarComponent],
+  imports: [CommonModule, ReactiveFormsModule, NavbarComponent,FormsModule],
   templateUrl: './add-income.component.html',
   styleUrls: ['./add-income.component.css'],
 })
@@ -120,6 +121,7 @@ export class AddIncomeComponent implements OnInit {
           this.currentIncome = incomeData.amount || '-';
           this.currentBudget = incomeData.budget || '-';
           this.isFormDisabled = true; // ✅ Disable form after saving
+          this.incomeForm.enable(); 
 
           // ✅ Reset form fields after update
           this.incomeForm.reset();
